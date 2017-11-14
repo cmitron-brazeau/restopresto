@@ -76,14 +76,18 @@ public class FragmentAcceuil extends Fragment{
                     }
                     else{
                         List<Personne> listPersonne = sql.getAllPersonnes();
+                        boolean blnConnecter = false;
                         for(int i = 0; i < listPersonne.size(); i++){
-                            if(strNom.equals(listPersonne.get(i).firstName)){
-                                Toast.makeText(getContext(), "utilisateur entrer avec succes", Toast.LENGTH_SHORT).show();
-                                unInterface.changerFragment(new FragmentPrincipal(), true);
+                            if(strNom.equals(listPersonne.get(i).firstName) && strPassword.equals(listPersonne.get(i).password)){
+                                blnConnecter = true;
                             }
-                            else{
-                                Toast.makeText(getContext(), "utilisateur non existant", Toast.LENGTH_SHORT).show();
-                            }
+                        }
+                        if(blnConnecter){
+                            Toast.makeText(getContext(), "utilisateur entrer avec succes", Toast.LENGTH_SHORT).show();
+                            unInterface.changerFragment(new FragmentPrincipal(), true);
+                        }
+                        else{
+                            Toast.makeText(getContext(), "utilisateur non existant", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
