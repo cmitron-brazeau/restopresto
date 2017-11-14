@@ -26,6 +26,7 @@ public class FragmentInscription extends Fragment {
 
     public FragmentInscription() {
         // Required empty public constructor
+        //dsadsadsadsadsadsadsadsa
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
