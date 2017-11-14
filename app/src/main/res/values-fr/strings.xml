@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Resto-Presto</string>
+    <string name="signIn">se connecter</string>
+    <string name="signUp">s\'enreigistrer</string>
+    <string name="nom">nom</string>
+    <string name="password">mot de passe</string>
+    <string name="tvOu">ou</string>
+
+
+    <string name="facebook_app_id">251244342070726</string>
+
+</resources>
