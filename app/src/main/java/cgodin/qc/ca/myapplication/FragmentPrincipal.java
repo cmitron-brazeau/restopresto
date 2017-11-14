@@ -24,7 +24,7 @@ public class FragmentPrincipal extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmentacceuil, container, false);
+        View view = inflater.inflate(R.layout.fragmentprincipal, container, false);
         view.setBackgroundColor(Color.WHITE);
 
         return view;
