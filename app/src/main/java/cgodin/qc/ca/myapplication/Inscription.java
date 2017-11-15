@@ -75,8 +75,10 @@ public class Inscription extends AppCompatActivity {
                                     etConfirm.setError(getString(R.string.etConfirmVide));
                                     etConfirm.requestFocus();
                                 } else if (!(etPassword.getText().toString().equals(etConfirm.getText().toString()))) {
-                                    etConfirm.setError(getString(R.string.etPasswordInvalide));
-                                    etConfirm.requestFocus();
+                                    etPassword.setError(getString(R.string.etPasswordInvalide));
+                                    etPassword.setText("");
+                                    etConfirm.setText("");
+                                    etPassword.requestFocus();
                                 }
                             }
                         }

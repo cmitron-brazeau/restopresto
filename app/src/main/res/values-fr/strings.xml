@@ -22,6 +22,7 @@
     <string name="etPasswordInvalide">Les mots de passes ne correspondes pas</string>
     <string name="etUsernameVide">Le nom d\'utilisateur est requis</string>
     <string name="toastFacebookLoginError">Une erreur est survenue, veuillez réessayer plus tard</string>
+    <string name="LoginInvalide">Cette combinaison est invalide</string>
 
     <string name="facebook_app_id">251244342070726</string>
 

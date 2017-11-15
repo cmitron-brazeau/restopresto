@@ -188,11 +188,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     String strPassword = etPassword.getText().toString();
 
                     if (strCourriel.trim().equals("")) {
-                        etCourriel.setError("le courriel doit être écrit");
+                        etCourriel.setError(getString(R.string.etCourrielVide));
                         etCourriel.requestFocus();
                     } else {
                         if (strPassword.trim().equals("")) {
-                            etPassword.setError("le mot de passe doit être écrit");
+                            etPassword.setError(getString(R.string.etPasswordVide));
                             etPassword.requestFocus();
                         } else {
                             List<User> listUser = sql.getAllUsers();
@@ -208,7 +208,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 myIntent.putExtra(MapEtRestaurants.USER_ID, user.getId());
                                 MainActivity.this.startActivity(myIntent);
                             } else {
-                                Toast.makeText(MainActivity.this, "utilisateur non existant", Toast.LENGTH_SHORT).show();
+                                etPassword.setError(getString(R.string.LoginInvalide));
+                                etPassword.setText("");
+                                etPassword.requestFocus();
                             }
                         }
                     }
@@ -275,10 +277,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // lecture du fichier de préférences.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         connectedUserID = prefs.getInt(MapEtRestaurants.PREF_CONNECTED_USERID, 0);
-        Log.i("ON RESTORE SAVE", "restoring user #" + connectedUserID);
-        Log.i("ON RESTORE SAVE", "restoring user #" + connectedUserID);
-        Log.i("ON RESTORE SAVE", "restoring user #" + connectedUserID);
-        Log.i("ON RESTORE SAVE", "restoring user #" + connectedUserID);
     }
 
     @Override

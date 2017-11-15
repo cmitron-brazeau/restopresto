@@ -48,8 +48,9 @@ public class MapEtRestaurants extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LoginManager.getInstance().logOut();
+                userId = -1;
                 SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(MapEtRestaurants.this).edit();
-                prefs.putInt(PREF_CONNECTED_USERID, -1);
+                prefs.putInt(PREF_CONNECTED_USERID, userId);
                 prefs.apply();
                 prefs.commit();
                 Intent myIntent = new Intent(MapEtRestaurants.this, MainActivity.class);
