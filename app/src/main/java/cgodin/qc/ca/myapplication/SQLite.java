@@ -6,87 +6,120 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import cgodin.qc.ca.myapplication.personne.Personne;
+import cgodin.qc.ca.myapplication.user.User;
 
 public class SQLite extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Projet1.db";
-    public static final String PERSON_TABLE_NAME = "personne";
-    public static final String PERSON_COLUMN_ID = "id";
-    public static final String PERSON_COLUMN_FIRSTNAME = "firstName";
-    public static final String PERSON_COLUMN_PASSWORD = "password";
-    public static final String PERSON_COLUMN_EMAIL = "email";
+    public static final String DATABASE_NAME = "RestoPresto.db";
+    // Table Utilisateur
+    public static final String UTIL_TABLE_NAME = "utilisateur";
+    public static final String UTIL_COLUMN_ID = "id";
+    public static final String UTIL_COLUMN_USERNAME = "userName";
+    public static final String UTIL_COLUMN_PASSWORD = "password";
+    public static final String UTIL_COLUMN_EMAIL = "email";
+    public static final String UTIL_COLUMN_FACEBOOK_ID = "facebook_id";
+    // Table Favoris
+    public static final String FAV_TABLE_NAME = "favoris";
+    public static final String FAV_COLUMN_USER_ID = "user_id";
+    public static final String FAV_COLUMN_RESTO_ID = "resto_id";
 
     public SQLite(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
     public void onCreate(SQLiteDatabase db) {
+        // Table Utilisateur
         db.execSQL(
-                "create table " + PERSON_TABLE_NAME + " (" +
-                        PERSON_COLUMN_ID + " integer primary key, " +
-                        PERSON_COLUMN_FIRSTNAME + " text, " +
-                        PERSON_COLUMN_PASSWORD + " text, " +
-                        PERSON_COLUMN_EMAIL + " text);"
+                "create table " + UTIL_TABLE_NAME + " (" +
+                        UTIL_COLUMN_ID + " integer primary key, " +
+                        UTIL_COLUMN_USERNAME + " text, " +
+                        UTIL_COLUMN_PASSWORD + " text, " +
+                        UTIL_COLUMN_EMAIL + " text, " +
+                        UTIL_COLUMN_FACEBOOK_ID + " text);"
+        );
+        // Table Favoris
+        db.execSQL(
+                "create table " + FAV_TABLE_NAME + " (" +
+                        FAV_COLUMN_USER_ID + " integer, " +
+                        FAV_COLUMN_RESTO_ID + " integer);"
         );
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS person");
+        db.execSQL("DROP TABLE IF EXISTS " + UTIL_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + FAV_TABLE_NAME);
         onCreate(db);
     }
 
-    public boolean insertPersonne(String firstName, String password, String email) {
+    // MÉTHODES DES UTILISATEURS
+    public Long insertUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PERSON_COLUMN_FIRSTNAME, firstName);
-        contentValues.put(PERSON_COLUMN_PASSWORD, password);
-        contentValues.put(PERSON_COLUMN_EMAIL, email);
-        db.insert(PERSON_TABLE_NAME, null, contentValues);
-        return true;
+        contentValues.put(UTIL_COLUMN_USERNAME, user.getUserName());
+        contentValues.put(UTIL_COLUMN_PASSWORD, user.getPassword());
+        contentValues.put(UTIL_COLUMN_EMAIL, user.getEmail());
+        contentValues.put(UTIL_COLUMN_FACEBOOK_ID, user.getFacebookID());
+        Long retour = db.insert(UTIL_TABLE_NAME, null, contentValues);
+        this.close();
+        return retour;
     }
 
-    public Cursor getPersonne(Integer id) {
+    public User getUser(Integer id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String table = PERSON_TABLE_NAME;
-        String selection = PERSON_COLUMN_ID + "=?";
+        String table = UTIL_TABLE_NAME;
+        String selection = UTIL_COLUMN_ID + "=?";
         String[] selectionargs = new String[]{id.toString()};
-        Cursor personne = db.query(table, null, selection, selectionargs, null, null, null);
-        return personne;
+        Cursor crUser = db.query(table, null, selection, selectionargs, null, null, null);
+        crUser.moveToFirst();
+        int userId = crUser.getInt(crUser.getColumnIndex(UTIL_COLUMN_ID));
+        String userName = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_USERNAME));
+        String password = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_PASSWORD));
+        String email = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_EMAIL));
+        String facebookId = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_FACEBOOK_ID));
+        User user = new User(userId, userName, password, email, facebookId);
+        crUser.close();
+        this.close();
+        return user;
     }
 
-    public boolean updatePersonne(Integer id, String firstName, String password, String email) {
+    public boolean updateUser(Integer id, String userName, String password, String email, String facebookId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(PERSON_COLUMN_FIRSTNAME, firstName);
-        contentValues.put(PERSON_COLUMN_PASSWORD, password);
-        contentValues.put(PERSON_COLUMN_EMAIL, email);
-        db.update(PERSON_TABLE_NAME, contentValues, PERSON_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
+        contentValues.put(UTIL_COLUMN_USERNAME, userName);
+        contentValues.put(UTIL_COLUMN_PASSWORD, password);
+        contentValues.put(UTIL_COLUMN_EMAIL, email);
+        contentValues.put(UTIL_COLUMN_FACEBOOK_ID, facebookId);
+        db.update(UTIL_TABLE_NAME, contentValues, UTIL_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
         return true;
     }
 
-    public Integer deletePersonne(Integer id) {
+    public Integer deleteUser(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(PERSON_TABLE_NAME, PERSON_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
+        int retour = db.delete(UTIL_TABLE_NAME, UTIL_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
+        this.close();
+        return retour;
     }
 
-    public ArrayList<Personne> getAllPersonnes() {
-        ArrayList<Personne> arrayPersons = new ArrayList<Personne>();
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> arrayUsers = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String table = PERSON_TABLE_NAME;
-        String orderBy = PERSON_COLUMN_FIRSTNAME + " collate localized";
-        Cursor persons = db.query(table, null, null, null, null, null, orderBy);
-        while (persons.moveToNext()){
-            int id = persons.getInt(persons.getColumnIndex(PERSON_COLUMN_ID));
-            String firstName = persons.getString(persons.getColumnIndex(PERSON_COLUMN_FIRSTNAME));
-            String password = persons.getString(persons.getColumnIndex(PERSON_COLUMN_PASSWORD));
-            String email = persons.getString(persons.getColumnIndex(PERSON_COLUMN_EMAIL));
-            arrayPersons.add(new Personne(id, firstName, password, email));
+        String table = UTIL_TABLE_NAME;
+        String orderBy = UTIL_COLUMN_USERNAME + " collate localized";
+        Cursor users = db.query(table, null, null, null, null, null, orderBy);
+        while (users.moveToNext()){
+            int id = users.getInt(users.getColumnIndex(UTIL_COLUMN_ID));
+            String userName = users.getString(users.getColumnIndex(UTIL_COLUMN_USERNAME));
+            String password = users.getString(users.getColumnIndex(UTIL_COLUMN_PASSWORD));
+            String email = users.getString(users.getColumnIndex(UTIL_COLUMN_EMAIL));
+            String facebookId = users.getString(users.getColumnIndex(UTIL_COLUMN_FACEBOOK_ID));
+            arrayUsers.add(new User(id, userName, password, email, facebookId));
         }
-        persons.close();
-        return arrayPersons;
+        users.close();
+        this.close();
+        return arrayUsers;
     }
+
+    //TODO Méthodes des favoris pour les restaurants
 }

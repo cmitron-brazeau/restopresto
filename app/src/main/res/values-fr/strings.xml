@@ -1,11 +1,27 @@
 <resources>
     <string name="app_name">Resto-Presto</string>
-    <string name="signIn">se connecter</string>
-    <string name="signUp">s\'enreigistrer</string>
-    <string name="nom">nom</string>
-    <string name="password">mot de passe</string>
+    <string name="btnSignIn">se connecter</string>
+    <string name="btnEnregistrer">s\'enregistrer</string>
+    <string name="btnCreateAccount">creer un compte</string>
+    <string name="etHintCourriel">courriel</string>
+    <string name="etHintPassword">mot de passe</string>
     <string name="tvOu">ou</string>
+    <string name="tvInscription">Création du compte</string>
+    <string name="tvCourriel">Courriel : </string>
+    <string name="tvPassword">Mot de passe : </string>
+    <string name="tvConfirmPassword">Confirmation du mot de passe : </string>
+    <string name="tvUsername">Votre nom d\'utilisateur : </string>
+    <string name="toastAddUser"> a été créé avec succès !</string>
 
+    <!-- Error Msg -->
+    <string name="etCourrielVide">Le courriel est requis</string>
+    <string name="etCourrielInvalide">Le courriel est invalide</string>
+    <string name="etCourrielExiste">Ce courriel existe déjà</string>
+    <string name="etPasswordVide">Le mot de passe est requis</string>
+    <string name="etConfirmVide">La confirmation du mot de passe est requise</string>
+    <string name="etPasswordInvalide">Les mots de passes ne correspondes pas</string>
+    <string name="etUsernameVide">Le nom d\'utilisateur est requis</string>
+    <string name="toastFacebookLoginError">Une erreur est survenue, veuillez réessayer plus tard</string>
 
     <string name="facebook_app_id">251244342070726</string>
 
