@@ -12,6 +12,15 @@
     <string name="tvConfirmPassword">Confirm password : </string>
     <string name="tvUsername">Your username : </string>
     <string name="toastAddUser"> has been successfully created !</string>
+    <string name="etHintUserName">Username </string>
+    <string name="etHintNewPassword">New password</string>
+    <string name="etHintConfirmNewPassword">Confirm password</string>
+    <string name="etHintAddNewCourriel">Add email to log in with the app</string>
+    <string name="tvNewPassword">Change password : </string>
+    <string name="tvAddNewPassword">Add password to log in with the app :</string>
+    <string name="imgProfilPicDesc">Profil picture</string>
+    <string name="btnSignOut">Sign out</string>
+    <string name="btnSaveChanges">Save changes</string>
 
     <!-- Error Msg -->
     <string name="etCourrielVide">The email is required</string>

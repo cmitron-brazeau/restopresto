@@ -12,6 +12,15 @@
     <string name="tvConfirmPassword">Confirmation du mot de passe : </string>
     <string name="tvUsername">Votre nom d\'utilisateur : </string>
     <string name="toastAddUser"> a été créé avec succès !</string>
+    <string name="etHintUserName">Nom d\'utilisateur </string>
+    <string name="etHintNewPassword">Nouveau mot de passe</string>
+    <string name="etHintConfirmNewPassword">Confirmation du mot de passe</string>
+    <string name="etHintAddNewCourriel">Ajouter un courriel pour vous connecter avec l\'application</string>
+    <string name="tvNewPassword">Changer de mot de passe : </string>
+    <string name="tvAddNewPassword">Ajouter un mot de passe pour vous connecter avec l\'application : </string>
+    <string name="imgProfilPicDesc">Photo de profile</string>
+    <string name="btnSignOut">Déconnexion</string>
+    <string name="btnSaveChanges">Enregistrer</string>
 
     <!-- Error Msg -->
     <string name="etCourrielVide">Le courriel est requis</string>

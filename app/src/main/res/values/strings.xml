@@ -1,1 +1,7 @@
-<resources></resources>
+<resources>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_GoogleMap">Hello blank Google Map</string>
+    <string name="hello_blank_Favorite">Hello blank Favorite</string>
+
+</resources>

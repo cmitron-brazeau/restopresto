@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     CallbackManager callbackManager;
     EditText etCourriel;
     EditText etPassword;
-    TextView tvOU;
     GoogleApiClient googleApiClient;
     public static final int REQ_CODE = 111;
     int connectedUserID = -1;
@@ -68,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         else {
             sql = new SQLite(this);
             googleHelper = new GoogleApiClientHelper(googleApiClient);
-
-            tvOU = (TextView) findViewById(R.id.tvOu);
 
             googleSignInButton = (SignInButton) findViewById(R.id.sign_in_google);
             googleSignInButton.setSize(SignInButton.SIZE_WIDE);
@@ -105,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             int userID = -1;
                             String userEmail = "";
                             String userFirstName = "";
-                            String userLastName = "";
                             String userFacebookId = "";
                             try {
                                 userEmail = object.getString("email");
@@ -125,12 +121,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 userFirstName = "N/A";
                             }
 
-                            try {
-                                userLastName = object.getString("last_name");
-                            } catch (Exception ex) {
-                                userLastName = "";
-                            }
-
                             if (userFacebookId != "N/A") {
                                 ArrayList<User> users = sql.getAllUsers();
                                 for (int i = 0; i < users.size(); i++) {
@@ -147,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                     myIntent.putExtra(MapEtRestaurants.USER_ID, user.getId());
                                     MainActivity.this.startActivity(myIntent);
                                 } else {
-                                    sql.insertUser(new User(userFirstName + " " + userLastName, "noPass", "noEmail", userFacebookId));
+                                    sql.insertUser(new User(userFirstName, "", "", userFacebookId));
                                     ArrayList<User> arrayUsers = sql.getAllUsers();
                                     for (int i = 0; i < arrayUsers.size(); i++) {
                                         if (arrayUsers.get(i).getFacebookID().equals(userFacebookId)) {
@@ -236,9 +226,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()){
                 GoogleSignInAccount account = result.getSignInAccount();
-                String displayName = account.getDisplayName();
+                String givenName = account.getGivenName();
                 String email = account.getEmail();
-                tvOU.setText(displayName + " | " + email);
 
                 int userID = -1;
 
@@ -258,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     MainActivity.this.startActivity(myIntent);
                 }
                 else {
-                    sql.insertUser(new User(displayName, "noPass", email, "0"));
+                    sql.insertUser(new User(givenName, "noPass", email, "0"));
                     ArrayList<User> arrayUsers = sql.getAllUsers();
                     for (int i = 0; i < arrayUsers.size(); i++){
                         if (arrayUsers.get(i).getEmail().equals(email)){

@@ -93,7 +93,7 @@ public class Inscription extends AppCompatActivity {
                     }
                 }
                 else{
-                    etCourriel.setError(getString(R.string.etConfirmVide));
+                    etCourriel.setError(getString(R.string.etCourrielVide));
                     etCourriel.requestFocus();
                 }
             }
