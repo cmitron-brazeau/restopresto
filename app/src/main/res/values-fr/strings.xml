@@ -20,7 +20,10 @@
     <string name="tvAddNewPassword">Ajouter un mot de passe pour vous connecter avec l\'application : </string>
     <string name="imgProfilPicDesc">Photo de profile</string>
     <string name="btnSignOut">Déconnexion</string>
-    <string name="btnSaveChanges">Enregistrer</string>
+    <string name="btnDeleteUser">Supprimer le compte</string>
+    <string name="btnRestaurants">Restaurants</string>
+    <string name="btnFavoris">Favoris</string>
+    <string name="btnProfil">Profil</string>
 
     <!-- Error Msg -->
     <string name="etCourrielVide">Le courriel est requis</string>

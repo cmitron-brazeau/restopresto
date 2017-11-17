@@ -1,0 +1,56 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="cgodin.qc.ca.myapplication.FragmentProfil">
+
+    <ImageView
+        android:id="@+id/imgProfilPic"
+        android:src="@mipmap/ic_no_profil_pic_icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:contentDescription="@string/imgProfilPicDesc" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/imgProfilPic"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+        app:layout_constraintLeft_toLeftOf="@+id/tvUsername"/>
+
+    <Button
+        android:id="@+id/btnDeleteUser"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/btnDeleteUser"
+        android:layout_marginTop="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnSign_out"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmail"/>
+
+    <Button
+        android:id="@+id/btnSign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/btnSignOut"
+        android:drawableEnd="@mipmap/ic_logout_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnDeleteUser"
+        app:layout_constraintLeft_toRightOf="@+id/btnDeleteUser"/>
+
+</android.support.constraint.ConstraintLayout>

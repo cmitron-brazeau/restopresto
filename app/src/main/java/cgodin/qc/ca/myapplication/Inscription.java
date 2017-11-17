@@ -58,7 +58,7 @@ public class Inscription extends AppCompatActivity {
                                     strCourriel = etCourriel.getText().toString();
                                     strMotPasse = etPassword.getText().toString();
                                     strUsername = etUsername.getText().toString();
-                                    User newUser = new User(strUsername, strMotPasse, strCourriel, "0");
+                                    User newUser = new User(strUsername, strMotPasse, strCourriel, "0", "0");
                                     sql.insertUser(newUser);
                                     Toast.makeText(Inscription.this, newUser.getUserName() + " " + getString(R.string.toastAddUser), Toast.LENGTH_SHORT).show();
                                     Intent myIntent = new Intent(Inscription.this, MainActivity.class);

@@ -19,6 +19,7 @@ public class SQLite extends SQLiteOpenHelper {
     public static final String UTIL_COLUMN_PASSWORD = "password";
     public static final String UTIL_COLUMN_EMAIL = "email";
     public static final String UTIL_COLUMN_FACEBOOK_ID = "facebook_id";
+    public static final String UTIL_COLUMN_GOOGLE_ID = "google_id";
     // Table Favoris
     public static final String FAV_TABLE_NAME = "favoris";
     public static final String FAV_COLUMN_USER_ID = "user_id";
@@ -36,7 +37,8 @@ public class SQLite extends SQLiteOpenHelper {
                         UTIL_COLUMN_USERNAME + " text, " +
                         UTIL_COLUMN_PASSWORD + " text, " +
                         UTIL_COLUMN_EMAIL + " text, " +
-                        UTIL_COLUMN_FACEBOOK_ID + " text);"
+                        UTIL_COLUMN_FACEBOOK_ID + " text, " +
+                        UTIL_COLUMN_GOOGLE_ID + " text);"
         );
         // Table Favoris
         db.execSQL(
@@ -60,6 +62,7 @@ public class SQLite extends SQLiteOpenHelper {
         contentValues.put(UTIL_COLUMN_PASSWORD, user.getPassword());
         contentValues.put(UTIL_COLUMN_EMAIL, user.getEmail());
         contentValues.put(UTIL_COLUMN_FACEBOOK_ID, user.getFacebookID());
+        contentValues.put(UTIL_COLUMN_GOOGLE_ID, user.getGoogleID());
         Long retour = db.insert(UTIL_TABLE_NAME, null, contentValues);
         this.close();
         return retour;
@@ -77,21 +80,11 @@ public class SQLite extends SQLiteOpenHelper {
         String password = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_PASSWORD));
         String email = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_EMAIL));
         String facebookId = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_FACEBOOK_ID));
-        User user = new User(userId, userName, password, email, facebookId);
+        String googleId = crUser.getString(crUser.getColumnIndex(UTIL_COLUMN_GOOGLE_ID));
+        User user = new User(userId, userName, password, email, facebookId, googleId);
         crUser.close();
         this.close();
         return user;
-    }
-
-    public boolean updateUser(Integer id, String userName, String password, String email, String facebookId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(UTIL_COLUMN_USERNAME, userName);
-        contentValues.put(UTIL_COLUMN_PASSWORD, password);
-        contentValues.put(UTIL_COLUMN_EMAIL, email);
-        contentValues.put(UTIL_COLUMN_FACEBOOK_ID, facebookId);
-        db.update(UTIL_TABLE_NAME, contentValues, UTIL_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
-        return true;
     }
 
     public Integer deleteUser(Integer id) {
@@ -114,7 +107,8 @@ public class SQLite extends SQLiteOpenHelper {
             String password = users.getString(users.getColumnIndex(UTIL_COLUMN_PASSWORD));
             String email = users.getString(users.getColumnIndex(UTIL_COLUMN_EMAIL));
             String facebookId = users.getString(users.getColumnIndex(UTIL_COLUMN_FACEBOOK_ID));
-            arrayUsers.add(new User(id, userName, password, email, facebookId));
+            String googleId = users.getString(users.getColumnIndex(UTIL_COLUMN_GOOGLE_ID));
+            arrayUsers.add(new User(id, userName, password, email, facebookId, googleId));
         }
         users.close();
         this.close();

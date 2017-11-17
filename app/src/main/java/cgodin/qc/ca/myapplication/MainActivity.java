@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         restaurer();
 
         if (connectedUserID > 0){
-            Intent myintent = new Intent(MainActivity.this, MapEtRestaurants.class);
-            myintent.putExtra(MapEtRestaurants.USER_ID, connectedUserID);
+            Intent myintent = new Intent(MainActivity.this, ConnectedNavigation.class);
+            myintent.putExtra(ConnectedNavigation.USER_ID, connectedUserID);
             MainActivity.this.startActivity(myintent);
         }
         else {
@@ -89,10 +89,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             callbackManager = CallbackManager.Factory.create();
             facebookSignInButton = (LoginButton) findViewById(R.id.sign_in_facebook);
+            List<String> permissions = new ArrayList<>();
+            permissions.add("public_profile");
+            permissions.add("email");
+            facebookSignInButton.setReadPermissions(permissions);
             facebookSignInButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
                     String accessToken = loginResult.getAccessToken().getToken();
+
+
 
                     GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
@@ -106,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             try {
                                 userEmail = object.getString("email");
                             } catch (Exception ex) {
-                                userEmail = "N/A";
+                                userEmail = "null";
                             }
 
                             try {
@@ -124,28 +130,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             if (userFacebookId != "N/A") {
                                 ArrayList<User> users = sql.getAllUsers();
                                 for (int i = 0; i < users.size(); i++) {
-                                    if (users.get(i).getEmail().equals(userEmail)) {
-                                        userID = users.get(i).getId();
-                                    } else if (users.get(i).getFacebookID().equals(userFacebookId)) {
+                                    if (users.get(i).getFacebookID().equals(userFacebookId)) {
                                         userID = users.get(i).getId();
                                     }
                                 }
 
                                 if (userID > 0) {
                                     User user = sql.getUser(userID);
-                                    Intent myIntent = new Intent(MainActivity.this, MapEtRestaurants.class);
-                                    myIntent.putExtra(MapEtRestaurants.USER_ID, user.getId());
+                                    Intent myIntent = new Intent(MainActivity.this, ConnectedNavigation.class);
+                                    myIntent.putExtra(ConnectedNavigation.USER_ID, user.getId());
                                     MainActivity.this.startActivity(myIntent);
                                 } else {
-                                    sql.insertUser(new User(userFirstName, "", "", userFacebookId));
+                                    sql.insertUser(new User(userFirstName, "", userEmail, userFacebookId, "0"));
                                     ArrayList<User> arrayUsers = sql.getAllUsers();
                                     for (int i = 0; i < arrayUsers.size(); i++) {
                                         if (arrayUsers.get(i).getFacebookID().equals(userFacebookId)) {
                                             userID = arrayUsers.get(i).getId();
                                         }
                                     }
-                                    Intent myIntent = new Intent(MainActivity.this, MapEtRestaurants.class);
-                                    myIntent.putExtra(MapEtRestaurants.USER_ID, userID);
+                                    Intent myIntent = new Intent(MainActivity.this, ConnectedNavigation.class);
+                                    myIntent.putExtra(ConnectedNavigation.USER_ID, userID);
                                     MainActivity.this.startActivity(myIntent);
                                 }
                             } else {
@@ -154,7 +158,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         }
                     });
                     Bundle parameters = new Bundle();
-                    parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
+
+                    parameters.putString("fields", "id, first_name, email"); // Parámetros que pedimos a facebook
                     request.setParameters(parameters);
                     request.executeAsync();
                 }
@@ -194,8 +199,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             }
                             if (userID > 0) {
                                 User user = sql.getUser(userID);
-                                Intent myIntent = new Intent(MainActivity.this, MapEtRestaurants.class);
-                                myIntent.putExtra(MapEtRestaurants.USER_ID, user.getId());
+                                Intent myIntent = new Intent(MainActivity.this, ConnectedNavigation.class);
+                                myIntent.putExtra(ConnectedNavigation.USER_ID, user.getId());
                                 MainActivity.this.startActivity(myIntent);
                             } else {
                                 etPassword.setError(getString(R.string.LoginInvalide));
@@ -228,12 +233,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 GoogleSignInAccount account = result.getSignInAccount();
                 String givenName = account.getGivenName();
                 String email = account.getEmail();
+                String googleId = account.getId();
 
                 int userID = -1;
 
                 ArrayList<User> users = sql.getAllUsers();
                 for (int i = 0; i < users.size(); i++){
-                    if (users.get(i).getEmail().equals(email)){
+                    if (users.get(i).getGoogleID().equals(googleId)){
                         userID = users.get(i).getId();
                     }
                 }
@@ -242,20 +248,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 if (userID > 0){
                     User user = sql.getUser(userID);
-                    Intent myIntent = new Intent(MainActivity.this, MapEtRestaurants.class);
-                    myIntent.putExtra(MapEtRestaurants.USER_ID, user.getId());
+                    Intent myIntent = new Intent(MainActivity.this, ConnectedNavigation.class);
+                    myIntent.putExtra(ConnectedNavigation.USER_ID, user.getId());
                     MainActivity.this.startActivity(myIntent);
                 }
                 else {
-                    sql.insertUser(new User(givenName, "noPass", email, "0"));
+                    sql.insertUser(new User(givenName, "", email, "0", googleId));
                     ArrayList<User> arrayUsers = sql.getAllUsers();
                     for (int i = 0; i < arrayUsers.size(); i++){
-                        if (arrayUsers.get(i).getEmail().equals(email)){
+                        if (arrayUsers.get(i).getGoogleID().equals(googleId)){
                             userID = arrayUsers.get(i).getId();
                         }
                     }
-                    Intent myIntent = new Intent(MainActivity.this, MapEtRestaurants.class);
-                    myIntent.putExtra(MapEtRestaurants.USER_ID, userID);
+                    Intent myIntent = new Intent(MainActivity.this, ConnectedNavigation.class);
+                    myIntent.putExtra(ConnectedNavigation.USER_ID, userID);
                     MainActivity.this.startActivity(myIntent);
                 }
             }
@@ -265,19 +271,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void restaurer(){
         // lecture du fichier de préférences.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        connectedUserID = prefs.getInt(MapEtRestaurants.PREF_CONNECTED_USERID, 0);
+        connectedUserID = prefs.getInt(ConnectedNavigation.PREF_CONNECTED_USERID, 0);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
+        Log.i("RESTORE_USERID","#" + connectedUserID);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
-    /*@Override
-    public void changerFragment(Fragment frag, boolean back) {
-        if(!back)
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentAccueil, frag).commit();
-        else
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentAccueil, frag).addToBackStack(null).commit();
-    }*/
 }

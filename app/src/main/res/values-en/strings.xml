@@ -20,7 +20,10 @@
     <string name="tvAddNewPassword">Add password to log in with the app :</string>
     <string name="imgProfilPicDesc">Profil picture</string>
     <string name="btnSignOut">Sign out</string>
-    <string name="btnSaveChanges">Save changes</string>
+    <string name="btnDeleteUser">Delete user</string>
+    <string name="btnRestaurants">Restaurants</string>
+    <string name="btnFavoris">Favorites</string>
+    <string name="btnProfil">Profil</string>
 
     <!-- Error Msg -->
     <string name="etCourrielVide">The email is required</string>

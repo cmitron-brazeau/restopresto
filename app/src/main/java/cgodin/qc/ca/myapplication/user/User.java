@@ -7,20 +7,23 @@ public class User {
     private String password;
     private String email;
     private String facebookID;
+    private String googleID;
 
-    public User(int id, String userName, String password, String email, String facebookID){
+    public User(int id, String userName, String password, String email, String facebookID, String googleID){
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.facebookID = facebookID;
+        this.googleID = googleID;
     }
 
-    public User(String userName, String password, String email, String facebookID){
+    public User(String userName, String password, String email, String facebookID, String googleID){
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.facebookID = facebookID;
+        this.googleID = googleID;
     }
 
     // Getters
@@ -43,5 +46,9 @@ public class User {
 
     public String getFacebookID() {
         return facebookID;
+    }
+
+    public String getGoogleID() {
+        return googleID;
     }
 }
