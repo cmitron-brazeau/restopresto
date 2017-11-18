@@ -18,9 +18,6 @@ import cgodin.qc.ca.myapplication.user.User;
 public class FragmentGoogleMap extends Fragment {
     ConnectedNavigation activity;
 
-    User connectedUser;
-    TextView tvTitre;
-
     private OnFragmentInteractionListener mListener;
 
     public FragmentGoogleMap() {
@@ -38,8 +35,6 @@ public class FragmentGoogleMap extends Fragment {
         return view;
     }
 
-        return rootView;
-    }
     /*
     @Override
     public void onLocationChanged(Location location) {
