@@ -24,17 +24,30 @@
     <string name="btnRestaurants">Restaurants</string>
     <string name="btnFavoris">Favorites</string>
     <string name="btnProfil">Profil</string>
+    <string name="tvKeyword">Keyword : </string>
+    <string name="tvRadius">Radius : </string>
+    <string name="btnSearch">search</string>
+    <string name="tvDonnees">Results for keyword \'\'</string>
+    <string name="tvDonnees2">\'\' with a </string>
+    <string name="tvDonnees3"> m range</string>
+    <string name="tvDonneesNoData">No results for keyword "</string>
+    <string name="tvOpenHours">Open hours :</string>
+    <string name="btnAddFavorite">Add to\nfavorites</string>
+    <string name="btnRemoveFavorite">Delete from\nfavorites</string>
+    <string name="tvContacterNous">Contact us :</string>
 
     <!-- Error Msg -->
     <string name="etCourrielVide">The email is required</string>
-    <string name="etCourrielInvalide">The email is invalide</string>
+    <string name="etCourrielInvalide">The email is invalid</string>
     <string name="etCourrielExiste">This email already exists</string>
     <string name="etPasswordVide">The password is required</string>
     <string name="etConfirmVide">The password confirmation is required</string>
     <string name="etPasswordInvalide">The passwords dont correspond</string>
     <string name="etUsernameVide">The username is required</string>
     <string name="toastFacebookLoginError">An error has occurred, please try again later</string>
-    <string name="LoginInvalide">This combination is invlaid</string>
+    <string name="LoginInvalide">This combination is invalid</string>
+    <string name="etRadiusVide">The radius is required</string>
+    <string name="etRadiusInvalide">The radius must be smaller or equal 50 000</string>
 
 
     <string name="facebook_app_id">251244342070726</string>

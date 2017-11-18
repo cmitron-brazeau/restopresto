@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/headerLine"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/headerLine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imgPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_restaurants_icon"
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline"/>
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/imgPhoto"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPhoto"
+        app:layout_constraintRight_toLeftOf="@+id/ratingBar"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.1"
+        android:isIndicator="true"
+        android:progressTint="#F9E50C"
+        android:secondaryProgressTint="#D3D3D3"
+        android:progressBackgroundTint="#D3D3D3"
+        app:layout_constraintTop_toTopOf="@id/imgPhoto"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPhoto"
+        app:layout_constraintLeft_toRightOf="@+id/guideline"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/imgPhoto"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <View
+        android:id="@+id/footerLine"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="@id/tvAddress"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_percent="0.33"
+        android:orientation="vertical"/>
+
+</android.support.constraint.ConstraintLayout>

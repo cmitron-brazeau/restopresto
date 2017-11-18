@@ -1,0 +1,189 @@
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="cgodin.qc.ca.myapplication.FragmentDetailResto">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.1"
+        android:isIndicator="true"
+        android:progressTint="#F9E50C"
+        android:secondaryProgressTint="#D3D3D3"
+        android:progressBackgroundTint="#D3D3D3"
+        app:layout_constraintTop_toTopOf="@+id/imgPhoto"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPhoto"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/imgPhoto"/>
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/ratingBar"
+        app:layout_constraintRight_toRightOf="@id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"/>
+
+    <ImageView
+        android:id="@+id/imgPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"/>
+
+    <TextView
+        android:id="@+id/tvOpenHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvOpenHours"
+        android:textSize="18dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="@+id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@id/imgPhoto"/>
+
+    <TextView
+        android:id="@+id/tvMondayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvOpenHours"
+        app:layout_constraintLeft_toLeftOf="@+id/tvOpenHours"/>
+
+    <TextView
+        android:id="@+id/tvTuesdayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvMondayHours"
+        app:layout_constraintLeft_toLeftOf="@+id/tvOpenHours"/>
+
+    <TextView
+        android:id="@+id/tvWednesdayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvTuesdayHours"
+        app:layout_constraintLeft_toLeftOf="@+id/tvOpenHours"/>
+
+    <TextView
+        android:id="@+id/tvThursdayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvWednesdayHours"
+        app:layout_constraintLeft_toLeftOf="@+id/tvOpenHours"/>
+
+    <TextView
+        android:id="@+id/tvFridayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvThursdayHours"
+        app:layout_constraintLeft_toLeftOf="@+id/tvOpenHours"/>
+
+    <TextView
+        android:id="@+id/tvSaturdayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvFridayHours"
+        app:layout_constraintLeft_toLeftOf="@+id/tvOpenHours"/>
+
+    <TextView
+        android:id="@+id/tvSundayHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvSaturdayHours"
+        app:layout_constraintLeft_toLeftOf="@+id/tvOpenHours"/>
+
+    <Button
+        android:id="@+id/btnAddFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/imgPhoto"
+        app:layout_constraintRight_toRightOf="@id/imgPhoto"
+        app:layout_constraintTop_toBottomOf="@id/imgPhoto"
+        app:layout_constraintBottom_toTopOf="@+id/tvContacterNous"
+        android:text="@string/btnAddFavorite"
+        style="?android:attr/borderlessButtonStyle"
+        android:drawableTop="@mipmap/ic_favorite_icon"/>
+
+    <TextView
+        android:id="@+id/tvContacterNous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="18sp"
+        android:text="@string/tvContacterNous"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvSundayHours" />
+
+    <TextView
+        android:id="@+id/tvPhoneCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tvPhoneNumber"
+        app:layout_constraintTop_toTopOf="@id/tvPhoneNumber"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+        android:drawableStart="@mipmap/ic_phone_call_icon"/>
+
+    <TextView
+        android:id="@+id/tvPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#0000EE"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/tvContacterNous"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/tvPhoneNumber"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvPhoneNumber"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+        android:drawableStart="@mipmap/ic_texto_icon"/>
+
+    <TextView
+        android:id="@+id/tvWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:autoLink="web"
+        android:textColorLink="#0000EE"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPhoneNumber"/>
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvWebsite"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>

@@ -5,6 +5,7 @@
     tools:context="cgodin.qc.ca.myapplication.FragmentGoogleMap">
 
     <TextView
+        android:id="@+id/tvTitre"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_GoogleMap" />

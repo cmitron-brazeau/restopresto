@@ -37,36 +37,20 @@ public class FragmentProfil extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        sql = new SQLite(getContext());
-        userId = getArguments().getInt(ARG_USER_ID);
-        connectedUser = sql.getUser(userId);
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-        Log.i("CONNECTED_USER","#" + connectedUser.getId());
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = (View)inflater.inflate(R.layout.fragment_fragment_profil, container, false);
+        sql = new SQLite(getContext());
+        userId = getArguments().getInt(ARG_USER_ID);
+        connectedUser = sql.getUser(userId);
 
+        View view = (View)inflater.inflate(R.layout.fragment_fragment_profil, container, false);
 
         tvUserName = (TextView)view.findViewById(R.id.tvUsername);
         tvEmail = (TextView)view.findViewById(R.id.tvEmail);
         tvUserName.setText(connectedUser.getUserName());
         tvEmail.setText(connectedUser.getEmail());
 
-        //TODO TEST THIS SHIT
         btnDeleteUser = (Button)view.findViewById(R.id.btnDeleteUser);
         btnDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override

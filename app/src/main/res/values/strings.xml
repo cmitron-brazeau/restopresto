@@ -1,10 +1,9 @@
 <resources>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_GoogleMap">Hello blank Google Map</string>
-    <string name="hello_blank_Favorite">Hello blank Favorite</string>
+    <string name="hello_blank_Detail">Hello blank Detail</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="etDefaultRadius">500</string>
+    <string name="tvMeter">m</string>
 
 </resources>

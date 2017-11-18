@@ -24,6 +24,17 @@
     <string name="btnRestaurants">Restaurants</string>
     <string name="btnFavoris">Favoris</string>
     <string name="btnProfil">Profil</string>
+    <string name="tvKeyword">Mot clé : </string>
+    <string name="tvRadius">Distance : </string>
+    <string name="btnSearch">rechercher</string>
+    <string name="tvDonnees">Resultats pour le mot clé «</string>
+    <string name="tvDonnees2">» avec une distance de </string>
+    <string name="tvDonnees3">m</string>
+    <string name="tvDonneesNoData">Aucun résultat pour le mot clé «</string>
+    <string name="tvOpenHours">Heures d\'ouverture :</string>
+    <string name="btnAddFavorite">Ajouter aux\nfavoris</string>
+    <string name="btnRemoveFavorite">Supprimer des\nfavoris</string>
+    <string name="tvContacterNous">Contacter nous :</string>
 
     <!-- Error Msg -->
     <string name="etCourrielVide">Le courriel est requis</string>
@@ -35,6 +46,8 @@
     <string name="etUsernameVide">Le nom d\'utilisateur est requis</string>
     <string name="toastFacebookLoginError">Une erreur est survenue, veuillez réessayer plus tard</string>
     <string name="LoginInvalide">Cette combinaison est invalide</string>
+    <string name="etRadiusVide">La distance est requise</string>
+    <string name="etRadiusInvalide">La distance doit être inférieur ou égal  à 50 000</string>
 
     <string name="facebook_app_id">251244342070726</string>
 
