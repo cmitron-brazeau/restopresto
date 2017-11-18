@@ -5,7 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyApplication-master.iml" filepath="$PROJECT_DIR$/MyApplication-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/restopresto.iml" filepath="$PROJECT_DIR$/restopresto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restoprestoFinal.iml" filepath="$PROJECT_DIR$/restoprestoFinal.iml" />
     </modules>
   </component>
 </project>

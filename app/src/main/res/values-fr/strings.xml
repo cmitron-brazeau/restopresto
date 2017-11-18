@@ -49,6 +49,6 @@
     <string name="etRadiusVide">La distance est requise</string>
     <string name="etRadiusInvalide">La distance doit être inférieur ou égal  à 50 000</string>
 
-    <string name="facebook_app_id">251244342070726</string>
+     <string name="facebook_app_id">251244342070726</string>
 
 </resources>
