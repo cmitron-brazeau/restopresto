@@ -53,6 +53,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
+        Log.i("CONNECTEDUSER", String.valueOf(connectedUserID));
         if (connectedUserID > 0){
             Intent myintent = new Intent(MainActivity.this, ConnectedNavigation.class);
             myintent.putExtra(ConnectedNavigation.USER_ID, connectedUserID);
@@ -276,6 +287,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // lecture du fichier de préférences.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         connectedUserID = prefs.getInt(ConnectedNavigation.PREF_CONNECTED_USERID, 0);
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
+        Log.i("RESTORE", String.valueOf(connectedUserID));
     }
 
     @Override

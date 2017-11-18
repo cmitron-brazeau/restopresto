@@ -20,15 +20,12 @@ import cgodin.qc.ca.myapplication.user.User;
 
 public class FragmentProfil extends Fragment {
 
-    public static final String USER_ID = "userId";
+    ConnectedNavigation activity;
+
     public static final String PREF_CONNECTED_USERID = "prefConnectedUserId";
-    SQLite sql;
-    int userId = 0;
-    User connectedUser;
+
     Button btnSign_out, btnDeleteUser;
     TextView tvUserName, tvEmail;
-
-    public static final String ARG_USER_ID = "userId";
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,31 +37,24 @@ public class FragmentProfil extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        sql = new SQLite(getContext());
-        userId = getArguments().getInt(ARG_USER_ID);
-        connectedUser = sql.getUser(userId);
+        activity = (ConnectedNavigation)getActivity();
 
         View view = (View)inflater.inflate(R.layout.fragment_fragment_profil, container, false);
 
         tvUserName = (TextView)view.findViewById(R.id.tvUsername);
         tvEmail = (TextView)view.findViewById(R.id.tvEmail);
-        tvUserName.setText(connectedUser.getUserName());
-        tvEmail.setText(connectedUser.getEmail());
+        tvUserName.setText(activity.connectedUser.getUserName());
+        tvEmail.setText(activity.connectedUser.getEmail());
 
         btnDeleteUser = (Button)view.findViewById(R.id.btnDeleteUser);
         btnDeleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LoginManager.getInstance().logOut();
-                sql.deleteUser(userId);
-
-                userId = -1;
-                SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-                prefs.putInt(PREF_CONNECTED_USERID, userId);
-                prefs.apply();
-                prefs.commit();
-
-                mListener.onFragmentSignOut(userId);
+                activity.sql.deleteUser(activity.userId);
+                activity.sql.deleteAllFavoritePlaces(activity.userId);
+                activity.userId = -1;
+                mListener.onFragmentSignOut();
             }
         });
 
@@ -73,14 +63,8 @@ public class FragmentProfil extends Fragment {
             @Override
             public void onClick(View view) {
                 LoginManager.getInstance().logOut();
-
-                userId = -1;
-                SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-                prefs.putInt(PREF_CONNECTED_USERID, userId);
-                prefs.apply();
-                prefs.commit();
-
-                mListener.onFragmentSignOut(userId);
+                activity.userId = -1;
+                mListener.onFragmentSignOut();
             }
         });
 
@@ -88,7 +72,7 @@ public class FragmentProfil extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentSignOut(int userId);
+        void onFragmentSignOut();
     }
 
     @Override
@@ -106,6 +90,5 @@ public class FragmentProfil extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-
     }
 }

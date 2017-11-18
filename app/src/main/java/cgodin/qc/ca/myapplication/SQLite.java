@@ -197,6 +197,13 @@ public class SQLite extends SQLiteOpenHelper {
         return retour;
     }
 
+    public Integer deleteAllFavoritePlaces(Integer userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int retour = db.delete(FAV_TABLE_NAME, FAV_COLUMN_USER_ID + " = ? ", new String[]{String.valueOf(userId)});
+        this.close();
+        return retour;
+    }
+
     public ArrayList<Restaurant> getAllFavoritePlaces() {
         ArrayList<Restaurant> arrayRestaurants = new ArrayList<>();
 

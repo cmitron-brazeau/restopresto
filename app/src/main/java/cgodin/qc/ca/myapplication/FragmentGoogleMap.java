@@ -16,15 +16,10 @@ import cgodin.qc.ca.myapplication.restaurant.Restaurant;
 import cgodin.qc.ca.myapplication.user.User;
 
 public class FragmentGoogleMap extends Fragment {
+    ConnectedNavigation activity;
 
-    public static final String USER_ID = "userId";
-    public static final String PREF_CONNECTED_USERID = "prefConnectedUserId";
-    SQLite sql;
-    int userId = 0;
     User connectedUser;
     TextView tvTitre;
-
-    public static final String ARG_USER_ID = "userId";
 
     private OnFragmentInteractionListener mListener;
 
@@ -36,19 +31,9 @@ public class FragmentGoogleMap extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        sql = new SQLite(getContext());
-        userId = getArguments().getInt(ARG_USER_ID);
-        connectedUser = sql.getUser(userId);
+        activity = (ConnectedNavigation)getActivity();
 
         View view = inflater.inflate(R.layout.fragment_fragment_google_map, container, false);
-
-        ArrayList<Restaurant> favPlaces = sql.getAllFavoritePlaces();
-
-        tvTitre = (TextView)view.findViewById(R.id.tvTitre);
-
-        for (int i = 0; i < favPlaces.size(); i++) {
-            tvTitre.setText(tvTitre.getText() + "\n" + favPlaces.get(i).getName());
-        }
 
         return view;
     }

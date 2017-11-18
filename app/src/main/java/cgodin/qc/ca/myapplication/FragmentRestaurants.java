@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -47,12 +48,8 @@ import cgodin.qc.ca.myapplication.restaurant.Restaurant;
 import cgodin.qc.ca.myapplication.user.User;
 
 public class FragmentRestaurants extends Fragment {
+    ConnectedNavigation activity;
 
-    SQLite sql;
-    int userId = 0;
-    User connectedUser;
-
-    public static final String ARG_USER_ID = "userId";
     // Requête API
     public static final String API_KEY = "key=AIzaSyCB8_OeW81M0sm5G17c-bjNR8qZ6ulB3aE"; //always last param
     public static final String LNG_EN = "language=en&";
@@ -81,9 +78,9 @@ public class FragmentRestaurants extends Fragment {
     Button btnSearch;
     EditText etKeyword, etRadius;
     ArrayList<Bitmap> mBitmaps;
-    ArrayList<Restaurant> mRestaurants;
     ArrayList<String> mPlacesPhotoUrl;
     TextView tvDonnees;
+    ArrayList<Restaurant> backupRestaurants;
 
 
     private RecyclerView mRecyclerView;
@@ -104,9 +101,7 @@ public class FragmentRestaurants extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        sql = new SQLite(getContext());
-        userId = getArguments().getInt(ARG_USER_ID);
-        connectedUser = sql.getUser(userId);
+        activity = (ConnectedNavigation)getActivity();
 
         View view = (View) inflater.inflate(R.layout.fragment_fragment_restaurants, container, false);
 
@@ -118,10 +113,6 @@ public class FragmentRestaurants extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.restaurantRecyclerView);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        if (savedInstanceState != null){
-            setRestaurantRecyclerAdapter(mRestaurants);
-        }
 
         btnSearch = (Button)view.findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +134,13 @@ public class FragmentRestaurants extends Fragment {
                 }
             }
         });
-
-        if (savedInstanceState == null) {
+        if (backupRestaurants != null){
+            setRestaurantRecyclerAdapter(backupRestaurants);
+        }
+        else if (activity.mRestaurants != null) {
+            setRestaurantRecyclerAdapter(activity.mRestaurants);
+        }
+        else {
             String urlRequest = URL_PLACE_NEARBY.replace("{parameters}", TYPE + LOCATION +
                     RADIUS.replace("{radius}", etRadius.getText()) +
                     (Locale.getDefault().getLanguage().equals("fr") ? LNG_FR : LNG_EN) + API_KEY);
@@ -152,21 +148,6 @@ public class FragmentRestaurants extends Fragment {
         }
 
         return view;
-    }
-
-    public Restaurant getRestaurantDetails(String placeId){
-        int index = -1;
-        for(int i = 0; i < mRestaurants.size(); i++){
-            if (mRestaurants.get(i).getPlaceId().equals(placeId)){
-                index = i;
-            }
-        }
-        if (index > -1){
-            return mRestaurants.get(index);
-        }
-        else {
-            return null;
-        }
     }
 
     private class getWebFluxJSONNearbyPlaces extends AsyncTask<String, Integer, String> {
@@ -256,7 +237,6 @@ public class FragmentRestaurants extends Fragment {
         JSONArray resultsJSONArray = new JSONArray();
         JSONObject resultJSON;
         String status = "";
-        String photoURL = "";
         try {
             resultsJSONArray = webFluxJSON.getJSONArray("results");
             status = webFluxJSON.getString("status");
@@ -279,7 +259,8 @@ public class FragmentRestaurants extends Fragment {
         else {
             tvDonnees.setText(getString(R.string.tvDonneesNoData) + etKeyword.getText() + getString(R.string.tvDonnees2) + " " +
                     etRadius.getText() + " " + getString(R.string.tvDonnees3));
-            //setRestaurantRecyclerAdapter(new ArrayList<Restaurant>());
+            activity.mRestaurants = new ArrayList<>();
+            setRestaurantRecyclerAdapter(activity.mRestaurants);
         }
     }
 
@@ -363,8 +344,7 @@ public class FragmentRestaurants extends Fragment {
     }
 
     public void lireJSONDetailPlaces(ArrayList<String> arrayWebFluxJSON) {
-        ArrayList<String> mPhotoPlaces = new ArrayList<>();
-        mRestaurants = new ArrayList<>();
+        activity.mRestaurants = new ArrayList<>();
 
         for (int i = 0; i < arrayWebFluxJSON.size(); i++) {
 
@@ -397,7 +377,7 @@ public class FragmentRestaurants extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            mRestaurants.add(new Restaurant(placeId, location, name, address, phoneNumber, openHours, rating, website));
+            activity.mRestaurants.add(new Restaurant(placeId, location, name, address, phoneNumber, openHours, rating, website));
         }
         mTaskPhoto = new getWebPhotoPlaces().execute(mPlacesPhotoUrl);
     }
@@ -457,12 +437,14 @@ public class FragmentRestaurants extends Fragment {
 
     public void setRestaurantBitmaps(){
         for (int i = 0; i < mBitmaps.size(); i++) {
-            mRestaurants.get(i).setPhoto(mBitmaps.get(i));
+            activity.mRestaurants.get(i).setPhoto(mBitmaps.get(i));
         }
-        setRestaurantRecyclerAdapter(mRestaurants);
+        setRestaurantRecyclerAdapter(activity.mRestaurants);
     }
 
     private void setRestaurantRecyclerAdapter(ArrayList<Restaurant> restaurants){
+        backupRestaurants = restaurants;
+        activity.mRestaurants = restaurants;
         mAdapter = new RecyclerAdapterRestaurant(restaurants);
         mRecyclerView.setAdapter(mAdapter);
     }

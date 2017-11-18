@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+
 import cgodin.qc.ca.myapplication.restaurant.Restaurant;
 import cgodin.qc.ca.myapplication.user.User;
 
@@ -42,6 +44,7 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
 
     Fragment fragment = new Fragment();
     FragmentRestaurants fragmentRestaurants;
+    ArrayList<Restaurant> mRestaurants;
 
     SQLite sql;
     int userId = 0;
@@ -56,8 +59,10 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connected_navigation);
 
+        sql = new SQLite(ConnectedNavigation.this);
         intent = getIntent();
         userId = intent.getIntExtra(USER_ID, 0);
+        connectedUser = sql.getUser(userId);
 
         frameContainer = (FrameLayout)findViewById(R.id.frameContainer);
 
@@ -71,10 +76,7 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
 
         if (savedInstanceState == null){
             // initialement
-            Bundle arguments = new Bundle();
-            arguments.putInt(FragmentRestaurants.ARG_USER_ID, userId);
             fragmentRestaurants = new FragmentRestaurants();
-            fragmentRestaurants.setArguments(arguments);
             changerFragment(frameContainer, fragmentRestaurants, false);
         }
 
@@ -83,10 +85,7 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
         btnRestaurants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle arguments = new Bundle();
-                arguments.putInt(FragmentRestaurants.ARG_USER_ID, userId);
                 fragmentRestaurants = new FragmentRestaurants();
-                fragmentRestaurants.setArguments(arguments);
                 changerFragment(frameContainer, fragmentRestaurants, false);
                 if (blnTwoPane){
                     FragmentVide fragmentVide = new FragmentVide();
@@ -99,10 +98,7 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
         btnFavoris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle arguments = new Bundle();
-                arguments.putInt(FragmentGoogleMap.ARG_USER_ID, userId);
                 fragment= new FragmentGoogleMap();
-                fragment.setArguments(arguments);
                 changerFragment(frameContainer, fragment, false);
                 if (blnTwoPane){
                     FragmentVide fragmentVide = new FragmentVide();
@@ -115,10 +111,7 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
         btnProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle arguments = new Bundle();
-                arguments.putInt(FragmentProfil.ARG_USER_ID, userId);
                 fragment = new FragmentProfil();
-                fragment.setArguments(arguments);
                 changerFragment(frameContainer, fragment, false);
                 if (blnTwoPane){
                     FragmentVide fragmentVide = new FragmentVide();
@@ -135,6 +128,17 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
         prefs.putInt(PREF_CONNECTED_USERID, userId);
         prefs.apply();
         prefs.commit();
+
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
+        Log.i("SAVE", String.valueOf(userId));
     }
 
     public void changerFragment(FrameLayout container, Fragment frag, Boolean back) {
@@ -152,14 +156,8 @@ public class ConnectedNavigation extends AppCompatActivity implements FragmentRe
     }
 
     @Override
-    public void onFragmentSignOut(int userId) {
-        this.userId = userId;
-        Intent myIntent = new Intent(this, MainActivity.class);
-        this.startActivity(myIntent);
-    }
-
-    @Override
-    public Restaurant onFragmentShowsRestaurantDetail(String placeId) {
-        return fragmentRestaurants.getRestaurantDetails(placeId);
+    public void onFragmentSignOut() {
+        Intent myintent = new Intent(ConnectedNavigation.this, MainActivity.class);
+        ConnectedNavigation.this.startActivity(myintent);
     }
 }
