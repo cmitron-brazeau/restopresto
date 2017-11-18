@@ -42,10 +42,10 @@ import java.util.ArrayList;
 import cgodin.qc.ca.myapplication.restaurant.Restaurant;
 import cgodin.qc.ca.myapplication.user.User;
 
-public class FragmentGoogleMap extends Fragment implements OnMapReadyCallback,
+public class FragmentGoogleMap extends Fragment/* implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener*/{
 
     private MapView mMapView;
     private GoogleMap googleMap;
@@ -104,7 +104,7 @@ public class FragmentGoogleMap extends Fragment implements OnMapReadyCallback,
 
         return rootView;
     }
-
+    /*
     @Override
     public void onLocationChanged(Location location) {
         lastLocation = location;
@@ -122,13 +122,13 @@ public class FragmentGoogleMap extends Fragment implements OnMapReadyCallback,
 
         currentLocationMarker = googleMap.addMarker(markerOptions);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
         if(client != null){
             LocationServices.FusedLocationApi.removeLocationUpdates(client, (com.google.android.gms.location.LocationListener) getContext());
         }
     }
-
+/*
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
 
@@ -153,10 +153,31 @@ public class FragmentGoogleMap extends Fragment implements OnMapReadyCallback,
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            LocationServices.FusedLocationApi.requestLocationUpdates(client, locationRequest, (com.google.android.gms.location.LocationListener) getContext());
+            LocationServices.FusedLocationApi.requestLocationUpdates(client, locationRequest, getActivity());
         }
     }
 
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+        }
+
+    }
 
     protected synchronized void buildGoogleApiClient(){
         client = new GoogleApiClient.Builder(getContext())
@@ -195,7 +216,7 @@ public class FragmentGoogleMap extends Fragment implements OnMapReadyCallback,
                         if (client == null) {
                             buildGoogleApiClient();
                         }
-                        googleMap.setMyLocationEnabled(true);
+                        mMap.setMyLocationEnabled(true);
                     }
                 }
                 else{
@@ -204,30 +225,7 @@ public class FragmentGoogleMap extends Fragment implements OnMapReadyCallback,
                 return;
         }
     }
-
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onMapReady(GoogleMap mMap) {
-        googleMap = mMap;
-
-        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            buildGoogleApiClient();
-            googleMap.setMyLocationEnabled(true);
-        }
-
-    }
-
+*/
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
