@@ -30,21 +30,17 @@ import cgodin.qc.ca.myapplication.user.User;
 
 public class FragmentDetailResto extends Fragment {
 
-    public static final String ARG_USER_ID = "userId";
-    public static final String ARG_PLACE_ID = "placeId";
-    public static final String ARG_TWO_PANE = "twoPane";
+    ConnectedNavigation activity;
 
-    SQLite sql;
-    int userId;
+    public static final String ARG_PLACE_ID = "placeId";
     String placeId;
-    User connectedUser;
-    Boolean blnTwoPane;
 
     TextView tvName, tvRating, tvMondayHours, tvTuesdayHours, tvWednesdayHours, tvThursdayHours, tvFridayHours, tvSaturdayHours,
             tvSundayHours, tvPhoneCall, tvPhoneNumber, tvTexto, tvWebsite, tvAddress;
     ImageView imgPhoto;
     RatingBar ratingBar;
     Button btnAddFavorite;
+    Restaurant mRestaurant;
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,15 +52,12 @@ public class FragmentDetailResto extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        sql = new SQLite(getContext());
-        userId = getArguments().getInt(ARG_USER_ID);
+        activity = (ConnectedNavigation)getActivity();
         placeId = getArguments().getString(ARG_PLACE_ID);
-        blnTwoPane = getArguments().getBoolean(ARG_TWO_PANE);
-        connectedUser = sql.getUser(userId);
 
         View view = inflater.inflate(R.layout.fragment_fragment_detail_resto, container, false);
 
-        if (blnTwoPane) {
+        if (activity.blnTwoPane) {
             // change fragment width to 50% of the screen
             Point size = new Point();
             getActivity().getWindowManager().getDefaultDisplay().getSize(size);
@@ -72,8 +65,12 @@ public class FragmentDetailResto extends Fragment {
             view.getLayoutParams().width = width / 2;
         }
 
-        final Restaurant mRestaurant =  mListener.onFragmentShowsRestaurantDetail(placeId);
-        ArrayList<Restaurant> favPlaces = sql.getAllFavoritePlaces();
+        for (int i = 0; i < activity.mRestaurants.size(); i++){
+            if (activity.mRestaurants.get(i).getPlaceId().equals(placeId)){
+                mRestaurant = activity.mRestaurants.get(i);
+            }
+        }
+        ArrayList<Restaurant> favPlaces = activity.sql.getAllFavoritePlaces();
         for (int i = 0; i < favPlaces.size(); i++){
             if (mRestaurant.getPlaceId().equals(favPlaces.get(i).getPlaceId())){
                 mRestaurant.setFavorite(true);
@@ -156,22 +153,21 @@ public class FragmentDetailResto extends Fragment {
             @Override
             public void onClick(View view) {
                 if (mRestaurant.getFavorite()){
-                    sql.deleteFavoritePlace(mRestaurant.getPlaceId());
+                    activity.sql.deleteFavoritePlace(mRestaurant.getPlaceId());
                 }
                 else {
-                    sql.insertFavoritePlace(userId, mRestaurant);
+                    activity.sql.insertFavoritePlace(activity.userId, mRestaurant);
                 }
                 mRestaurant.setFavorite(!mRestaurant.getFavorite());
                 btnAddFavorite.setText((mRestaurant.getFavorite() ? getString(R.string.btnRemoveFavorite) :
                         getString(R.string.btnAddFavorite)));
             }
         });
-
         return view;
     }
 
     public interface OnFragmentInteractionListener {
-        Restaurant onFragmentShowsRestaurantDetail(String placeId);
+        void onFragmentInteraction(Uri uri);
     }
 
     @Override

@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import cgodin.qc.ca.myapplication.restaurant.Restaurant;
 import cgodin.qc.ca.myapplication.user.User;
 
+public class FragmentGoogleMap extends Fragment {
+    ConnectedNavigation activity;
 public class FragmentGoogleMap extends Fragment/* implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
